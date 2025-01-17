@@ -1,13 +1,14 @@
 [gd_scene load_steps=6 format=3 uid="uid://cif3h1xr723vl"]
 
 [ext_resource type="Texture2D" uid="uid://ltrhgornomel" path="res://icon.svg" id="1_yuen3"]
-[ext_resource type="PackedScene" uid="uid://d4kt434187hen" path="res://player.tscn" id="2_s0y6r"]
+[ext_resource type="PackedScene" uid="uid://cs6wcsjpx2h8k" path="res://player_vehicle.tscn" id="2_yf4kf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j3hnp"]
 size = Vector3(100, 1, 100)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_urd1m"]
 albedo_color = Color(0.190762, 0.190762, 0.190762, 1)
+albedo_texture = ExtResource("1_yuen3")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_6ie7x"]
 
@@ -16,14 +17,6 @@ albedo_color = Color(0.190762, 0.190762, 0.190762, 1)
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 texture = ExtResource("1_yuen3")
-
-[node name="RigidBody3D" parent="." node_paths=PackedStringArray("ground") instance=ExtResource("2_s0y6r")]
-center_of_mass_mode = 1
-lock_rotation = false
-angular_damp_mode = 1
-angular_damp = 27.36
-airspeed = 10.0
-ground = NodePath("../Ground")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -38,3 +31,12 @@ mesh = SubResource("PlaneMesh_6ie7x")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0, 0)
+
+[node name="VehicleBody3D" parent="." instance=ExtResource("2_yf4kf")]
+mass = 24000.0
+center_of_mass_mode = 1
+speed = 768000.0
+acceleration = 1.0
+brake_speed = 1.0
+brake_force = 200.0
+steer_speed = 1.0
