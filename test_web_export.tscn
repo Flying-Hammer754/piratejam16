@@ -1,15 +1,40 @@
-[gd_scene load_steps=2 format=3 uid="uid://cif3h1xr723vl"]
+[gd_scene load_steps=6 format=3 uid="uid://cif3h1xr723vl"]
 
 [ext_resource type="Texture2D" uid="uid://ltrhgornomel" path="res://icon.svg" id="1_yuen3"]
+[ext_resource type="PackedScene" uid="uid://d4kt434187hen" path="res://player.tscn" id="2_s0y6r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j3hnp"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_urd1m"]
+albedo_color = Color(0.190762, 0.190762, 0.190762, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6ie7x"]
 
 [node name="Node3D" type="Node3D"]
-
-[node name="Camera3D" type="Camera3D" parent="."]
-current = true
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 texture = ExtResource("1_yuen3")
 
-[node name="AudioListener3D" type="AudioListener3D" parent="."]
-current = true
+[node name="RigidBody3D" parent="." node_paths=PackedStringArray("ground") instance=ExtResource("2_s0y6r")]
+center_of_mass_mode = 1
+lock_rotation = false
+angular_damp_mode = 1
+angular_damp = 27.36
+airspeed = 10.0
+ground = NodePath("../Ground")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_j3hnp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_urd1m")
+mesh = SubResource("PlaneMesh_6ie7x")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0, 0)
