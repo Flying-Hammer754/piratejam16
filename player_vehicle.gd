@@ -1,5 +1,3 @@
-# TODO: figure out how to fix the cars handling
-
 extends VehicleBody3D
 
 @export var speed: float = 15
@@ -19,7 +17,8 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	# steering is in radians
-	steering = Input.get_axis("player_move_right", "player_move_left") * PI
+	# the 0.4 value was taken from https://github.com/godotengine/godot-demo-projects/blob/4.2-31d1c0c/3d/truck_town/vehicles/vehicle.gd
+	steering = Input.get_axis("player_move_right", "player_move_left") * 0.4
 	#if steering > Input.get_axis("player_move_right", "player_move_left") * PI - 0.2:
 		#steering = Input.get_axis("player_move_right", "player_move_left") * PI
 	#else: if steering < Input.get_axis("player_move_right", "player_move_left") * PI / 10:
