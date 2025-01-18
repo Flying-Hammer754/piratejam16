@@ -3,11 +3,12 @@ extends RigidBody3D
 @export var speed: float = 18.0
 @export var airspeed: float = 10.0
 @export var jump_strength: float = 150
-@export var start_of_ragdoll: float = 0.08
 @export var max_velocity: float = 36
 @export var ground: Node3D
 
-var ragdoll_time: float = 0.0
+@onready var ragdoll_time: float = 0.0
+
+const player_common = preload("res://player_common.gd")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,26 +18,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func handle_ragdoll() -> void:
-	if Vector2(rotation.x, rotation.z).distance_squared_to(Vector2.ZERO) < start_of_ragdoll:
-		ragdoll_time = 0.0
-	else:
-		ragdoll_time += get_process_delta_time()
-		print("R", Vector2(rotation.x, rotation.z).distance_squared_to(Vector2.ZERO))
-		if ragdoll_time > 4:
-			axis_lock_linear_x = true
-			axis_lock_linear_y = true
-			axis_lock_linear_z = true
-			rotation.x = 0.0 #rotation.move_toward(Vector3(0.0, 0.0, 0.0), delta * (rotation.distance_squared_to(Vector3(0.0, 0.0, 0.0)) + 1.0))
-			rotation.z = 0.0
-			position.y += 0.5
-			angular_velocity = Vector3(0.0, 0.0, 0.0)
-			print(rotation_degrees)
-			axis_lock_linear_x = false
-			axis_lock_linear_y = false
-			axis_lock_linear_z = false
-			ragdoll_time = 0
-
 func _physics_process(delta: float) -> void:
 	var input_direction: Vector2 = Input.get_vector(
 			"player_move_left", "player_move_right",
@@ -45,10 +26,8 @@ func _physics_process(delta: float) -> void:
 	var movement_direction: Vector3 = Vector3(input_direction.x, 0.0, input_direction.y).normalized()
 	if get_colliding_bodies().has(ground):
 		movement_direction *= speed
-		# This was supposed to be for the player character to get up after being knocked down
-		# but, no matter what i try it doesn't work, so i got rid of it and locked the rotation on the player.
-		
-		handle_ragdoll()
+
+		ragdoll_time = player_common.handle_ragdoll(delta, ragdoll_time, self)
 	else:
 		movement_direction *= airspeed
 	

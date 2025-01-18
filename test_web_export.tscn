@@ -33,10 +33,5 @@ mesh = SubResource("PlaneMesh_6ie7x")
 transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0, 0)
 
 [node name="VehicleBody3D" parent="." instance=ExtResource("2_yf4kf")]
-mass = 24000.0
+mass = 1.0
 center_of_mass_mode = 1
-speed = 768000.0
-acceleration = 1.0
-brake_speed = 1.0
-brake_force = 200.0
-steer_speed = 1.0
