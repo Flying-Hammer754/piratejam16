@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cif3h1xr723vl"]
+[gd_scene load_steps=9 format=3 uid="uid://cif3h1xr723vl"]
 
 [ext_resource type="Texture2D" uid="uid://ltrhgornomel" path="res://icon.svg" id="1_yuen3"]
 [ext_resource type="PackedScene" uid="uid://cs6wcsjpx2h8k" path="res://player_vehicle.tscn" id="2_yf4kf"]
+[ext_resource type="PackedScene" uid="uid://cvdg2mh5h262f" path="res://line_sawblade.tscn" id="3_ca5sd"]
+[ext_resource type="PackedScene" uid="uid://b0gbs6o7uxe7p" path="res://ramp.tscn" id="4_jb6yt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j3hnp"]
 size = Vector3(100, 1, 100)
@@ -12,6 +14,9 @@ albedo_texture = ExtResource("1_yuen3")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_6ie7x"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cgfai"]
+bounce = 0.6
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
@@ -20,8 +25,10 @@ texture = ExtResource("1_yuen3")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -1, 0)
 shape = SubResource("BoxShape3D_j3hnp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
@@ -33,5 +40,20 @@ mesh = SubResource("PlaneMesh_6ie7x")
 transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0, 0)
 
 [node name="VehicleBody3D" parent="." instance=ExtResource("2_yf4kf")]
+collision_mask = 3
 mass = 1.0
+physics_material_override = SubResource("PhysicsMaterial_cgfai")
 center_of_mass_mode = 1
+
+[node name="LineSawblade" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_ca5sd")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -0.9, -8)
+movement_bounds = Vector2(-0.75, 0.75)
+speed = 20.0
+rotation_speed = 0.698132
+knockback_to_player = 16.0
+player = NodePath("../VehicleBody3D")
+
+[node name="Ramp" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_jb6yt")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -11, -0.9, 5)
+ramp_lift_speed = 5.0
+player = NodePath("../VehicleBody3D")

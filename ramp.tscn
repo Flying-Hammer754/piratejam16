@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://b0gbs6o7uxe7p"]
+
+[ext_resource type="Script" path="res://ramp.gd" id="1_ehotn"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_7u8eq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u6h1t"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ck77q"]
+size = Vector3(1.1, 1, 1.1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y1nr2"]
+size = Vector2(1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ajina"]
+albedo_color = Color(0.0192211, 0.143602, 0.199301, 1)
+
+[node name="Ramp" type="Node3D"]
+script = ExtResource("1_ehotn")
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AnimatableBody3D"]
+mesh = SubResource("PrismMesh_7u8eq")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D"]
+shape = SubResource("BoxShape3D_u6h1t")
+
+[node name="Area3D" type="Area3D" parent="."]
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_ck77q")
+
+[node name="Ground" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("PlaneMesh_y1nr2")
+surface_material_override/0 = SubResource("StandardMaterial3D_ajina")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
