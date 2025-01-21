@@ -19,6 +19,7 @@ albedo_texture = ExtResource("1_yuen3")
 bounce = 0.6
 
 [node name="Node3D" type="Node3D"]
+process_mode = 1
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)

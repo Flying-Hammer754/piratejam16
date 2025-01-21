@@ -1,15 +1,17 @@
 [gd_scene load_steps=2 format=3 uid="uid://3q07t5q38dgu"]
 
-[ext_resource type="Script" path="res://main_menu.gd" id="1_tndwi"]
+[ext_resource type="Script" path="res://UI.gd" id="1_mcfrh"]
 
 [node name="Game" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_tndwi")
+script = ExtResource("1_mcfrh")
+autoload_game_world = true
 
 [node name="MainMenuPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -69,7 +71,56 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_constants/separation = 18
 
+[node name="PauseMenuPanel" type="Panel" parent="."]
+visible = false
+self_modulate = Color(0, 0, 0, 0.392157)
+custom_minimum_size = Vector2(225, 0)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenuPanel"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -99.0
+offset_right = 99.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PauseMenuPanel/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="RestartButton" type="Button" parent="PauseMenuPanel/VBoxContainer"]
+layout_mode = 2
+text = "Restart from Checkpoint"
+
+[node name="SettingsButton" type="Button" parent="PauseMenuPanel/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="ExitToMenuButton" type="Button" parent="PauseMenuPanel/VBoxContainer"]
+layout_mode = 2
+text = "Exit to Menu"
+
+[node name="ExitToDesktopButton" type="Button" parent="PauseMenuPanel/VBoxContainer"]
+layout_mode = 2
+text = "Exit to Desktop"
+
 [connection signal="pressed" from="MainMenuPanel/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="MainMenuPanel/VBoxContainer/LoadGameButton" to="." method="_on_load_game_button_pressed"]
 [connection signal="pressed" from="MainMenuPanel/VBoxContainer/LicenseButton" to="." method="_on_license_button_pressed"]
 [connection signal="pressed" from="MainMenuPanel/VBoxContainer/QuitGameButton" to="." method="_on_quit_game_button_pressed"]
+[connection signal="pressed" from="PauseMenuPanel/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenuPanel/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="PauseMenuPanel/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="PauseMenuPanel/VBoxContainer/ExitToMenuButton" to="." method="_on_exit_to_menu_button_pressed"]
+[connection signal="pressed" from="PauseMenuPanel/VBoxContainer/ExitToDesktopButton" to="." method="_on_exit_to_desktop_button_pressed"]
