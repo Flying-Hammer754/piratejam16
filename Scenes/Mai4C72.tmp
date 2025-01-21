@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://tw22ilwqpedf"]
+
+[ext_resource type="Script" path="res://Scenes/movingWall.gd" id="1_xlq7e"]
+[ext_resource type="PackedScene" uid="uid://both8wqervdtq" path="res://Scenes/Player.tscn" id="2_5jesf"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_38wxy"]
+size = Vector2(10, 10)
+
+[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_ds2ep"]
+map_width = 11
+map_depth = 11
+map_data = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kjt8j"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tilb3"]
+
+[node name="Main" type="Node3D"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_38wxy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("HeightMapShape3D_ds2ep")
+
+[node name="movingWall" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.765135, 0)
+script = ExtResource("1_xlq7e")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="movingWall"]
+mesh = SubResource("BoxMesh_kjt8j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="movingWall"]
+shape = SubResource("BoxShape3D_tilb3")
+
+[node name="Player" parent="." instance=ExtResource("2_5jesf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.01897, 1.53333, -1.32199)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.660238, 0.751057, 0, -0.751057, 0.660238, 0, 3.35117, 0)
