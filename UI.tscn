@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://3q07t5q38dgu"]
+[gd_scene load_steps=4 format=3 uid="uid://3q07t5q38dgu"]
 
 [ext_resource type="Script" path="res://UI.gd" id="1_mcfrh"]
+[ext_resource type="PackedScene" uid="uid://bsfghn0astcep" path="res://ui_item_element.tscn" id="2_h2wat"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8am14"]
+bg_color = Color(0.775063, 0.775063, 0.775063, 1)
 
 [node name="Game" type="Control"]
 process_mode = 3
@@ -14,6 +18,7 @@ script = ExtResource("1_mcfrh")
 autoload_game_world = true
 
 [node name="MainMenuPanel" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -114,6 +119,35 @@ text = "Exit to Menu"
 [node name="ExitToDesktopButton" type="Button" parent="PauseMenuPanel/VBoxContainer"]
 layout_mode = 2
 text = "Exit to Desktop"
+
+[node name="InventoryPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(600, 5)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8am14")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InventoryPanel"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -113.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="Item1" parent="InventoryPanel/HBoxContainer" instance=ExtResource("2_h2wat")]
+layout_mode = 2
 
 [connection signal="pressed" from="MainMenuPanel/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="MainMenuPanel/VBoxContainer/LoadGameButton" to="." method="_on_load_game_button_pressed"]

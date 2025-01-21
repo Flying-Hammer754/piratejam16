@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://c74d21ind62hm"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ldsqq"]
+radius = 5.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_kwhxk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1mbqm"]
+albedo_color = Color(0.807058, 0.620858, 0, 1)
+metallic = 1.0
+metallic_specular = 0.66
+roughness = 0.4
+emission = Color(0, 0.288752, 0.485169, 1)
+emission_energy_multiplier = 0.65
+rim_tint = 0.0
+backlight = Color(0, 0.50291, 0.827215, 1)
+disable_receive_shadows = true
+
+[node name="CollectibleItem" type="Area3D"]
+collision_layer = 4
+collision_mask = 4
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ldsqq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_kwhxk")
+surface_material_override/0 = SubResource("StandardMaterial3D_1mbqm")

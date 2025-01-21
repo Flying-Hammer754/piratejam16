@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsfghn0astcep"]
+
+[ext_resource type="Texture2D" uid="uid://ltrhgornomel" path="res://icon.svg" id="1_lrgtf"]
+
+[node name="UIItemElement" type="NinePatchRect"]
+custom_minimum_size = Vector2(64, 0)
+size_flags_horizontal = 4
+mouse_filter = 1
+texture = ExtResource("1_lrgtf")
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -120.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Tooltip"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="." to="Panel" method="set_visible" binds= [true]]
+[connection signal="mouse_exited" from="." to="Panel" method="set_visible" binds= [false]]

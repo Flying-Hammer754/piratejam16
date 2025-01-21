@@ -19,6 +19,12 @@ var instantiated_game_scene: Node
 @onready var exit_to_menu_button = $PauseMenuPanel/VBoxContainer/ExitToMenuButton
 @onready var exit_to_desktop_button = $PauseMenuPanel/VBoxContainer/ExitToDesktopButton
 
+@onready var inventory_panel = $InventoryPanel
+@onready var inventory_list = $InventoryPanel/HBoxContainer
+
+func toggle_inventory(enabled: bool) -> void:
+	inventory_panel.visible = enabled
+
 func toggle_main_menu(enabled: bool) -> void:
 	new_game_button.disabled = not enabled
 	load_game_button.disabled = not enabled
@@ -37,6 +43,7 @@ func toggle_pause_menu(enabled: bool):
 func _on_resume_button_pressed() -> void:
 	toggle_main_menu(false)
 	toggle_pause_menu(false)
+	toggle_inventory(true)
 	get_tree().paused = false
 	# TODO: add special logic to resume game
 
@@ -51,6 +58,8 @@ func _on_settings_button_pressed() -> void:
 func _on_exit_to_menu_button_pressed() -> void:
 	toggle_pause_menu(false)
 	toggle_main_menu(true)
+	toggle_inventory(false)
+	instantiated_game_scene.disconnect("item_pickup", _on_item_pickup)
 	remove_child(instantiated_game_scene)
 	get_tree().paused = false
 
@@ -60,8 +69,10 @@ func _on_exit_to_desktop_button_pressed() -> void:
 func _on_new_game_button_pressed() -> void:
 	toggle_pause_menu(false)
 	toggle_main_menu(false)
+	toggle_inventory(true)
 	get_tree().paused = false
 	instantiated_game_scene = game_scene.instantiate()
+	instantiated_game_scene.connect("item_pickup", _on_item_pickup)
 	add_child(instantiated_game_scene)
 
 func _on_load_game_button_pressed() -> void:
@@ -90,10 +101,18 @@ func _on_quit_game_button_pressed() -> void:
 	get_tree().quit()
 
 func _ready() -> void:
+	toggle_main_menu(true)
+	toggle_pause_menu(false)
+	toggle_inventory(false)
 	if autoload_game_world:
 		_on_new_game_button_pressed()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("player_pause_game"):
 		toggle_pause_menu(true)
+		toggle_inventory(false)
 		get_tree().paused = true
+
+func _on_item_pickup(item: PackedScene) -> void:
+	var instance = item.instantiate()
+	inventory_list.add_child(instance)

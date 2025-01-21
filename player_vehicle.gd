@@ -8,9 +8,14 @@ extends VehicleBody3D
 # the 0.4 value was taken from https://github.com/godotengine/godot-demo-projects/blob/4.2-31d1c0c/3d/truck_town/vehicles/vehicle.gd
 @export var steer_speed: float = 0.4
 
+@export var level: Node3D
+
 @onready var ragdoll_time: float = 0.0
 
 const player_common = preload("res://player_common.gd")
+const item_ui_element = preload("res://ui_item_element.tscn")
+
+@onready var item_in_range: Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,6 +26,19 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+func _on_area_entered(body: Area3D) -> void:
+		if body.get_collision_layer_value(3):
+			item_in_range = body
+
+func _on_area_exited(body: Area3D) -> void:
+	if item_in_range == body:
+		item_in_range = null
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("player_pickup_item") && item_in_range != null:
+		if level.emit_signal("item_pickup", item_ui_element) != ERR_UNAVAILABLE:
+			pass
 
 func _physics_process(delta: float) -> void:
 	# steering is in radians
