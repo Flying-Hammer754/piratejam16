@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://ibibahmavray"]
+
+[ext_resource type="Script" path="res://crushing_walls.gd" id="1_xeep3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pcjv4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3ce0f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w83f1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4tn1s"]
+
+[node name="CrushingWalls" type="Node3D"]
+script = ExtResource("1_xeep3")
+
+[node name="LeftWall" type="AnimatableBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftWall"]
+shape = SubResource("BoxShape3D_pcjv4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftWall"]
+mesh = SubResource("BoxMesh_3ce0f")
+
+[node name="RightWall" type="AnimatableBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightWall"]
+shape = SubResource("BoxShape3D_w83f1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightWall"]
+mesh = SubResource("BoxMesh_4tn1s")

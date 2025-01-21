@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cif3h1xr723vl"]
+[gd_scene load_steps=10 format=3 uid="uid://cif3h1xr723vl"]
 
 [ext_resource type="Texture2D" uid="uid://ltrhgornomel" path="res://icon.svg" id="1_yuen3"]
 [ext_resource type="PackedScene" uid="uid://cs6wcsjpx2h8k" path="res://player_vehicle.tscn" id="2_yf4kf"]
 [ext_resource type="PackedScene" uid="uid://cvdg2mh5h262f" path="res://line_sawblade.tscn" id="3_ca5sd"]
 [ext_resource type="PackedScene" uid="uid://b0gbs6o7uxe7p" path="res://ramp.tscn" id="4_jb6yt"]
+[ext_resource type="PackedScene" uid="uid://ibibahmavray" path="res://crushing_walls.tscn" id="5_243ot"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j3hnp"]
 size = Vector3(100, 1, 100)
@@ -56,4 +57,10 @@ player = NodePath("../VehicleBody3D")
 [node name="Ramp" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_jb6yt")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -11, -0.9, 5)
 ramp_lift_speed = 5.0
+player = NodePath("../VehicleBody3D")
+
+[node name="CrushingWalls" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_243ot")]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, -1, 40)
+close_speed = 4.0
+open_speed = 4.0
 player = NodePath("../VehicleBody3D")
