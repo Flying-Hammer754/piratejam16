@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://ibibahmavray"]
 
-[ext_resource type="Script" path="res://crushing_walls.gd" id="1_xeep3"]
+[ext_resource type="Script" path="res://Scripts/crushing_walls.gd" id="1_xeep3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pcjv4"]
 

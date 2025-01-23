@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cvdg2mh5h262f"]
 
-[ext_resource type="Script" path="res://line_sawblade.gd" id="1_0if0o"]
+[ext_resource type="Script" path="res://Scripts/line_sawblade.gd" id="1_0if0o"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_55fe3"]
 

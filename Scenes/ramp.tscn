@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://b0gbs6o7uxe7p"]
 
-[ext_resource type="Script" path="res://ramp.gd" id="1_ehotn"]
+[ext_resource type="Script" path="res://Scripts/ramp.gd" id="1_ehotn"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_7u8eq"]
 

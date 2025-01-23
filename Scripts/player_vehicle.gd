@@ -12,8 +12,8 @@ extends VehicleBody3D
 
 @onready var ragdoll_time: float = 0.0
 
-const player_common = preload("res://player_common.gd")
-const item_ui_element = preload("res://ui_item_element.tscn")
+const player_common = preload("res://Scripts/player_common.gd")
+const item_ui_element = preload("res://Scenes/ui_item_element.tscn")
 
 @onready var item_in_range: Node
 

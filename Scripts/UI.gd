@@ -1,6 +1,6 @@
 extends Control
 
-const game_scene = preload("res://test_web_export.tscn")
+const game_scene = preload("res://Scenes/test_web_export.tscn")
 var instantiated_game_scene: Node
 
 @export var autoload_game_world: bool = false
