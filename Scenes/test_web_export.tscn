@@ -48,9 +48,6 @@ transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 
 mass = 1.0
 physics_material_override = SubResource("PhysicsMaterial_cgfai")
 center_of_mass_mode = 1
-speed = null
-brake_force = null
-steer_speed = null
 level = NodePath("..")
 
 [node name="LineSawblade" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_ca5sd")]
@@ -75,5 +72,6 @@ player = NodePath("../VehicleBody3D")
 [node name="CollectibleItem" parent="." instance=ExtResource("7_2fu4u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 0)
 
+[connection signal="player_add_item_to_inventory" from="." to="." method="_on_player_add_item_to_inventory"]
 [connection signal="body_entered" from="VehicleBody3D" to="VehicleBody3D" method="_on_body_entered"]
 [connection signal="body_exited" from="VehicleBody3D" to="VehicleBody3D" method="_on_body_exited"]

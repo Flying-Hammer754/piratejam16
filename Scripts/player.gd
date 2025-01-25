@@ -8,7 +8,7 @@ extends RigidBody3D
 
 @onready var ragdoll_time: float = 0.0
 
-const player_common = preload("res://player_common.gd")
+const player_common = preload("res://Scripts/player_common.gd")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

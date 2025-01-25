@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://c74d21ind62hm"]
+[gd_scene load_steps=5 format=3 uid="uid://c74d21ind62hm"]
+
+[ext_resource type="Script" path="res://Scripts/collectible_item.gd" id="1_55tll"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ldsqq"]
 radius = 5.0
@@ -20,6 +22,7 @@ disable_receive_shadows = true
 collision_layer = 4
 collision_mask = 4
 monitoring = false
+script = ExtResource("1_55tll")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_ldsqq")
