@@ -1,8 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cs6wcsjpx2h8k"]
+[gd_scene load_steps=6 format=3 uid="uid://cs6wcsjpx2h8k"]
 
 [ext_resource type="Script" path="res://Scripts/player_vehicle.gd" id="1_qdl5d"]
-[ext_resource type="PackedScene" uid="uid://bbhny3vdcu3um" path="res://Scenes/weapon_hammer.tscn" id="2_683i7"]
-[ext_resource type="PackedScene" uid="uid://dq07dpklv0cen" path="res://Scenes/weapon_saw.tscn" id="3_jok7n"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qhphk"]
 size = Vector3(0.75, 0.75, 1.75)
@@ -22,6 +20,7 @@ mass = 50.0
 contact_monitor = true
 max_contacts_reported = 8
 script = ExtResource("1_qdl5d")
+ground_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
@@ -32,10 +31,6 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.4
 mesh = SubResource("CapsuleMesh_xouck")
 
 [node name="AudioListener3D" type="AudioListener3D" parent="."]
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 25, 3)
-current = true
 
 [node name="BackLeftWheel" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0.5, 1.25)
@@ -94,14 +89,5 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_6ktdv")
 
-[node name="Weapons" type="Node3D" parent="."]
-
-[node name="HammerObject" parent="Weapons" instance=ExtResource("2_683i7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 4, -3)
-
-[node name="SawObject" parent="Weapons" instance=ExtResource("3_jok7n")]
-
 [connection signal="area_entered" from="item_pickup" to="." method="_on_area_entered"]
 [connection signal="area_exited" from="item_pickup" to="." method="_on_area_exited"]
-[connection signal="body_entered" from="Weapons/HammerObject" to="." method="_on_hammer_object_body_entered"]
-[connection signal="body_entered" from="Weapons/SawObject" to="." method="_on_saw_object_body_entered"]

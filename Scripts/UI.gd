@@ -1,7 +1,6 @@
 extends Control
 
 const game_scene = preload("res://Scenes/test_web_export.tscn")
-const default_item = preload("res://Scenes/ui_item_element.tscn")
 var instantiated_game_scene: Node
 
 @export var autoload_game_world: bool = false
@@ -60,7 +59,7 @@ func _on_exit_to_menu_button_pressed() -> void:
 	toggle_pause_menu(false)
 	toggle_main_menu(true)
 	toggle_inventory(false)
-	instantiated_game_scene.disconnect("ui_refresh_items", _on_ui_refresh_items)
+	instantiated_game_scene.disconnect("item_pickup", _on_item_pickup)
 	remove_child(instantiated_game_scene)
 	get_tree().paused = false
 
@@ -73,7 +72,7 @@ func _on_new_game_button_pressed() -> void:
 	toggle_inventory(true)
 	get_tree().paused = false
 	instantiated_game_scene = game_scene.instantiate()
-	instantiated_game_scene.connect("ui_refresh_items", _on_ui_refresh_items)
+	instantiated_game_scene.connect("item_pickup", _on_item_pickup)
 	add_child(instantiated_game_scene)
 
 func _on_load_game_button_pressed() -> void:
@@ -117,13 +116,3 @@ func _input(event: InputEvent) -> void:
 func _on_item_pickup(item: PackedScene) -> void:
 	var instance = item.instantiate()
 	inventory_list.add_child(instance)
-
-func _on_ui_refresh_items(items: Array[collectible_item]):
-	for c in inventory_list.get_children():
-		inventory_list.remove_child(c)
-	# TODO: check for ui item override, and set other options in instance
-	for i in items:
-		var instance = default_item.instantiate()
-		inventory_list.add_child(instance)
-		var tooltip: Label = instance.get_child(0).get_child(0)
-		tooltip.text = i.name + ":\n\n" + i.tooltip
