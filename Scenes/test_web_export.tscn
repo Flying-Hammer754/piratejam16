@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cif3h1xr723vl"]
+[gd_scene load_steps=14 format=3 uid="uid://cif3h1xr723vl"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_1geyj"]
 [ext_resource type="Texture2D" uid="uid://ltrhgornomel" path="res://icon.svg" id="1_yuen3"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ibibahmavray" path="res://Scenes/crushing_walls.tscn" id="5_243ot"]
 [ext_resource type="PackedScene" uid="uid://c74d21ind62hm" path="res://Scenes/collectible_item.tscn" id="7_2fu4u"]
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="8_1mfl4"]
+[ext_resource type="PackedScene" uid="uid://bt63uicsd5l0x" path="res://Scenes/Enemy1.tscn" id="9_7vd43"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j3hnp"]
 size = Vector3(100, 1, 100)
@@ -76,6 +77,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 0)
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.993757, 0.109508, -0.0213388, 0.00537891, 0.144014, 0.989561, 0.111438, -0.983498, 0.142526, 0, 7.87411, 0)
 script = ExtResource("8_1mfl4")
+
+[node name="Enemy01" parent="." instance=ExtResource("9_7vd43")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.38188, -15.6943)
 
 [connection signal="body_entered" from="VehicleBody3D" to="VehicleBody3D" method="_on_body_entered"]
 [connection signal="body_exited" from="VehicleBody3D" to="VehicleBody3D" method="_on_body_exited"]
