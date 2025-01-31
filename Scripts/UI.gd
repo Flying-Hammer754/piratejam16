@@ -24,6 +24,11 @@ var instantiated_game_scene: Node
 
 @onready var game_over_panel = $GameOverPanel
 
+@onready var score_panel = $ScorePanel
+
+func toggle_score_panel(enabled: bool) -> void:
+	score_panel.visible = enabled
+
 func toggle_game_over(enabled: bool) -> void:
 	game_over_panel.visible = enabled
 
@@ -50,6 +55,7 @@ func _on_resume_button_pressed() -> void:
 	toggle_pause_menu(false)
 	toggle_inventory(true)
 	toggle_game_over(false)
+	toggle_score_panel(true)
 	get_tree().paused = false
 	# TODO: add special logic to resume game
 
@@ -65,6 +71,7 @@ func _on_exit_to_menu_button_pressed() -> void:
 	toggle_main_menu(true)
 	toggle_inventory(false)
 	toggle_game_over(false)
+	toggle_score_panel(false)
 	instantiated_game_scene.disconnect("item_pickup", _on_item_pickup)
 	remove_child(instantiated_game_scene)
 	get_tree().paused = false
@@ -77,6 +84,7 @@ func _on_new_game_button_pressed() -> void:
 	toggle_main_menu(false)
 	toggle_inventory(true)
 	toggle_game_over(false)
+	toggle_score_panel(true)
 	get_tree().paused = false
 	instantiated_game_scene = game_scene.instantiate()
 	instantiated_game_scene.connect("item_pickup", _on_item_pickup)
@@ -112,6 +120,7 @@ func _ready() -> void:
 	toggle_pause_menu(false)
 	toggle_inventory(false)
 	toggle_game_over(false)
+	toggle_score_panel(false)
 	if autoload_game_world:
 		_on_new_game_button_pressed()
 

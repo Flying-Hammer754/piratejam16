@@ -11,6 +11,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	var score_panel_text: Label = $/root/Game/ScorePanel/Label
+	score_panel_text.text = str("Score: ", wave)
 	if get_child_count() == 0:
 		wave += 1
 		for i in range(0, wave):
