@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://3q07t5q38dgu"]
+[gd_scene load_steps=7 format=3 uid="uid://3q07t5q38dgu"]
 
 [ext_resource type="Script" path="res://Scripts/UI.gd" id="1_mcfrh"]
 [ext_resource type="PackedScene" uid="uid://bsfghn0astcep" path="res://Scenes/ui_item_element.tscn" id="2_h2wat"]
+[ext_resource type="Texture2D" uid="uid://b0h7rbnqg2gs3" path="res://Models and textures/Textures/cannon_icon.png" id="3_dckwk"]
+[ext_resource type="Texture2D" uid="uid://dqgu7vxtcylnu" path="res://Models and textures/Textures/hammer_icon.png" id="4_c4nm8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8am14"]
 bg_color = Color(0.775063, 0.775063, 0.775063, 1)
@@ -135,7 +137,6 @@ grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_8am14")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="InventoryPanel"]
-visible = false
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 1
 anchors_preset = 12
@@ -149,8 +150,19 @@ grow_vertical = 0
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="Item1" parent="InventoryPanel/HBoxContainer" instance=ExtResource("2_h2wat")]
+[node name="CannonItem" parent="InventoryPanel/HBoxContainer" instance=ExtResource("2_h2wat")]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
+size_flags_horizontal = 1
+tooltip_text = "Point with the mouse and shoot with Left Mouse Button"
+texture = ExtResource("3_dckwk")
+region_rect = Rect2(2, 16, 64, 32)
+
+[node name="HammerItem" parent="InventoryPanel/HBoxContainer" instance=ExtResource("2_h2wat")]
+visible = false
+layout_mode = 2
+tooltip_text = "Press [E] to use the hammer"
+texture = ExtResource("4_c4nm8")
 
 [node name="GameOverPanel" type="Panel" parent="."]
 visible = false

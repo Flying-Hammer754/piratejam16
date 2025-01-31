@@ -21,6 +21,8 @@ var instantiated_game_scene: Node
 
 @onready var inventory_panel = $InventoryPanel
 @onready var inventory_list = $InventoryPanel/HBoxContainer
+@onready var hammer_item = $InventoryPanel/HBoxContainer/HammerItem
+@onready var cannon_item = $InventoryPanel/HBoxContainer/CannonItem
 
 @onready var game_over_panel = $GameOverPanel
 
@@ -72,7 +74,7 @@ func _on_exit_to_menu_button_pressed() -> void:
 	toggle_inventory(false)
 	toggle_game_over(false)
 	toggle_score_panel(false)
-	instantiated_game_scene.disconnect("item_pickup", _on_item_pickup)
+	instantiated_game_scene.disconnect("item_update_ui", _on_item_pickup)
 	remove_child(instantiated_game_scene)
 	get_tree().paused = false
 
@@ -87,7 +89,7 @@ func _on_new_game_button_pressed() -> void:
 	toggle_score_panel(true)
 	get_tree().paused = false
 	instantiated_game_scene = game_scene.instantiate()
-	instantiated_game_scene.connect("item_pickup", _on_item_pickup)
+	instantiated_game_scene.connect("item_update_ui", _on_item_pickup)
 	add_child(instantiated_game_scene)
 
 func _on_load_game_button_pressed() -> void:
@@ -130,6 +132,8 @@ func _input(event: InputEvent) -> void:
 		toggle_inventory(false)
 		get_tree().paused = true
 
-func _on_item_pickup(item: PackedScene) -> void:
-	var instance = item.instantiate()
-	inventory_list.add_child(instance)
+func _on_item_pickup(item: collectible_item.WeaponKind, enabled: bool) -> void:
+	if item == collectible_item.WeaponKind.HAMMER:
+		hammer_item.visible = enabled
+	elif item == collectible_item.WeaponKind.CANNON:
+		cannon_item.visible = enabled

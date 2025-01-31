@@ -1,6 +1,6 @@
 extends Node3D
 
-signal item_pickup(item: PackedScene)
+signal item_update_ui(item: collectible_item.WeaponKind, enabled: bool)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

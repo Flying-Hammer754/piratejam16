@@ -83,6 +83,7 @@ transform = Transform3D(-2, 0, -3.01992e-07, 0, 2, 0, 3.01992e-07, 0, -2, 0, 2, 
 [node name="Hammer" parent="Weapons" instance=ExtResource("3_hutgl")]
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -1.4346, 1.58721, 1.32767)
 visible = false
+collision_mask = 8
 
 [node name="cannon" parent="Weapons" instance=ExtResource("4_2xq27")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 1.4651, 1.63591, 0.401675)
@@ -92,3 +93,4 @@ transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -0.0826507, 1.06797, -6
 
 [connection signal="area_entered" from="item_pickup" to="." method="_on_area_entered"]
 [connection signal="area_exited" from="item_pickup" to="." method="_on_area_exited"]
+[connection signal="body_entered" from="Weapons/Hammer" to="." method="_on_hammer_body_entered"]

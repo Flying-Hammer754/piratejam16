@@ -18,6 +18,8 @@ extends VehicleBody3D
 @onready var cannon_cooldown: float = 0
 @onready var cannon_mesh: Node3D = $Weapons/cannon
 
+@onready var hammer_mesh: Area3D = $Weapons/Hammer
+
 const RAY_LENGTH: float = 1000
 
 @onready var ragdoll_time: float = 0.0
@@ -29,6 +31,8 @@ const cannon_ball = preload("res://Scenes/cannon_ball.tscn")
 
 @onready var item_in_range: Node
 
+@export var hammer_swing_speed: float = 2
+@onready var swinging_hammer: bool = false
 
 # Timer to check if the player has actually landed
 var landing_timer: float = 0.0
@@ -36,7 +40,8 @@ const landing_duration: float = 0.2  # Time required to be grounded before consi
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	level.emit_signal("item_update_ui", collectible_item.WeaponKind.CANNON, true)
+	cannon_mesh.visible = true
 	#set_center_of_mass(Vector3.ZERO)
 
 
@@ -45,8 +50,7 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_area_entered(body: Area3D) -> void:
-	print("B")
-	if body.get_collision_layer_value(3):
+	if body.get_collision_layer_value(3) && body.name == "CollectibleItem":
 		item_in_range = body
 	elif body.get_collision_layer_value(2):
 		print("a")
@@ -57,9 +61,15 @@ func _on_area_exited(body: Area3D) -> void:
 	if item_in_range == body:
 		item_in_range = null
 
+func _on_hammer_body_entered(body: Node3D) -> void:
+	body.queue_free()
+
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("player_pickup_item") && item_in_range != null:
-		if level.emit_signal("item_pickup", item_ui_element) != ERR_UNAVAILABLE:
+	if item_in_range != null:
+		var ci: collectible_item = collectible_item.make("Hammer", "",null,null,collectible_item.WeaponKind.HAMMER,"",null)
+		if ci.weapon_kind == collectible_item.WeaponKind.HAMMER:
+			hammer_mesh.visible = true
+		if level.emit_signal("item_update_ui", ci.weapon_kind, true) != ERR_UNAVAILABLE:
 			pass
 
 func _physics_process(delta: float) -> void:
@@ -127,6 +137,25 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_pressed("player_fall_over"):
 		angular_velocity.x += 1
+	
+	if Input.is_action_pressed("player_swing_hammer") && hammer_mesh.visible:
+		swinging_hammer = true
+		hammer_mesh.monitoring = true
+	
+	if swinging_hammer:
+		hammer_mesh.rotation.x += clampf(hammer_swing_speed * delta, 0.0, PI/2)
+		hammer_mesh.rotation.x = clampf(hammer_mesh.rotation.x, 0.0, PI/2)
+	
+	if hammer_mesh.rotation.x >= PI/2 - 0.08:
+		swinging_hammer = false
+	
+	if not swinging_hammer:
+		hammer_mesh.monitoring = false
+		hammer_mesh.rotation.x -= clampf(hammer_swing_speed * delta, 0.0, PI/2)
+		hammer_mesh.rotation.x = clampf(hammer_mesh.rotation.x, 0.0, PI/2)
+	
+	if not hammer_mesh.visible:
+		hammer_mesh.monitoring = false
 	
 	ragdoll_time = handle_ragdoll(delta, ragdoll_time, self)
 	

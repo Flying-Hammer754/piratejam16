@@ -1,6 +1,7 @@
 extends Area3D
 
 const speed: float = 20
+const damage: int = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,8 +13,10 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_body_entered(body: Node3D) -> void:
-	# This should be fine, if the collision mask is set to the proper value
-	body.queue_free()
+	if not body.has_signal("take_damage"):
+		print("No take damage signal on enemy")
+	
+	body.emit_signal("take_damage", damage)
 
 func _physics_process(delta: float) -> void:
 	position.z -= speed * delta

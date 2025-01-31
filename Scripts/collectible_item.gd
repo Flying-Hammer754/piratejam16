@@ -4,7 +4,7 @@ extends Node
 enum WeaponKind {
 	NONE,
 	HAMMER,
-	SAW
+	CANNON
 }
 
 const hammer_object: PackedScene = preload("res://Scenes/weapon_hammer.tscn")
