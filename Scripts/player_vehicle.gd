@@ -10,12 +10,23 @@ extends VehicleBody3D
 
 @export var level: Node3D
 
+@export var camera: Camera3D
+@export var cannon_aim_indicator: MeshInstance3D
+@export var cannon_fire_rate: float = 1.5
+
+@onready var cannon_ball_spawn_position: Node3D = $Weapons/cannon/CannonBallSpawnPosition
+@onready var cannon_cooldown: float = 0
+@onready var cannon_mesh: Node3D = $Weapons/cannon
+
+const RAY_LENGTH: float = 1000
+
 @onready var ragdoll_time: float = 0.0
 
 @export_flags_3d_physics var ground_layer
 
 const player_common = preload("res://Scripts/player_common.gd")
 const item_ui_element = preload("res://Scenes/ui_item_element.tscn")
+const cannon_ball = preload("res://Scenes/cannon_ball.tscn")
 
 @onready var item_in_range: Node
 
@@ -48,6 +59,42 @@ func _input(event: InputEvent) -> void:
 			pass
 
 func _physics_process(delta: float) -> void:
+	# https://docs.godotengine.org/en/stable/tutorials/physics/ray-casting.html
+	var space_state = get_world_3d().direct_space_state
+	var mousepos = get_viewport().get_mouse_position()
+	
+	var origin = camera.project_ray_origin(mousepos)
+	var end = origin + camera.project_ray_normal(mousepos) * RAY_LENGTH
+	var query = PhysicsRayQueryParameters3D.create(origin, end)
+	query.collide_with_areas = false
+	var result = space_state.intersect_ray(query)
+	if result:
+		cannon_aim_indicator.position = result.position
+		#cannon_ball_spawn_position.look_at(
+			#Vector3(
+				#result.position.x,
+				#cannon_ball_spawn_position.position.y,
+				#result.position.z
+			#)
+		#)
+		cannon_mesh.look_at(
+			Vector3(
+				result.position.x,
+				cannon_mesh.position.y,
+				result.position.z
+			)
+		)
+		if Input.is_action_pressed("player_shoot_cannon") && cannon_cooldown < 0:
+			cannon_cooldown = cannon_fire_rate
+			var c = cannon_ball.instantiate()
+			level.add_child(c)
+			c.global_position = cannon_ball_spawn_position.global_position
+			c.global_rotation.y = cannon_ball_spawn_position.global_rotation.y
+			
+		
+	
+	cannon_cooldown -= delta
+	
 	# steering is in radians
 	
 	steering = Input.get_axis("player_move_right", "player_move_left") * steer_speed

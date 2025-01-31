@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cjv5irkyjnbow"]
+
+[ext_resource type="Texture2D" uid="uid://cn6fhagfwkrah" path="res://Models and textures/Textures/Ucupaint Body Color.png" id="1_bqasc"]
+
+[resource]
+albedo_color = Color(0.99184, 0.16086, 0, 1)
+albedo_texture = ExtResource("1_bqasc")
+metallic = 0.8
+metallic_specular = 0.2
+roughness = 0.9
+ao_light_affect = 1.0
+texture_repeat = false

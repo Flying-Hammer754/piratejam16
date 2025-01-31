@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ccemeev5r12ut"]
+
+[ext_resource type="Texture2D" uid="uid://b5ratq31ew4vh" path="res://Models and textures/Textures/Ucupaint Cylinder.002 Color.png" id="1_23jyo"]
+
+[resource]
+albedo_texture = ExtResource("1_23jyo")
+metallic = 0.25
+roughness = 0.7

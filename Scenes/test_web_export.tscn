@@ -1,26 +1,58 @@
-[gd_scene load_steps=14 format=3 uid="uid://cif3h1xr723vl"]
+[gd_scene load_steps=27 format=3 uid="uid://cif3h1xr723vl"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_1geyj"]
 [ext_resource type="Texture2D" uid="uid://ltrhgornomel" path="res://icon.svg" id="1_yuen3"]
 [ext_resource type="PackedScene" uid="uid://cs6wcsjpx2h8k" path="res://Scenes/player_vehicle.tscn" id="2_yf4kf"]
 [ext_resource type="PackedScene" uid="uid://cvdg2mh5h262f" path="res://Scenes/line_sawblade.tscn" id="3_ca5sd"]
+[ext_resource type="Material" uid="uid://ltc4pixcdr7k" path="res://Models and textures/Materials/sand_floor.tres" id="3_w1kym"]
 [ext_resource type="PackedScene" uid="uid://b0gbs6o7uxe7p" path="res://Scenes/ramp.tscn" id="4_jb6yt"]
 [ext_resource type="PackedScene" uid="uid://ibibahmavray" path="res://Scenes/crushing_walls.tscn" id="5_243ot"]
 [ext_resource type="PackedScene" uid="uid://c74d21ind62hm" path="res://Scenes/collectible_item.tscn" id="7_2fu4u"]
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="8_1mfl4"]
 [ext_resource type="PackedScene" uid="uid://bt63uicsd5l0x" path="res://Scenes/Enemy1.tscn" id="9_7vd43"]
+[ext_resource type="PackedScene" uid="uid://cwpqnvj8y33d6" path="res://Models and textures/Models/arena.glb" id="10_ngdjv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j3hnp"]
 size = Vector3(100, 1, 100)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_urd1m"]
-albedo_color = Color(0.190762, 0.190762, 0.190762, 1)
-albedo_texture = ExtResource("1_yuen3")
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_6ie7x"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_n111x"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_u75wb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1dqca"]
+albedo_color = Color(0.364384, 0.196851, 0.0431247, 1)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cgfai"]
 bounce = 0.6
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qqv5k"]
+size = Vector3(1, 10, 18)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dtacg"]
+size = Vector3(18, 10, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3ua2o"]
+size = Vector3(1, 10, 18)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wn7yy"]
+size = Vector3(18, 10, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gtirx"]
+size = Vector3(200, 3, 200)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_e6tcf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n7tam"]
+albedo_color = Color(0.270371, 0.136457, 0.126842, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_ftlfw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_caayw"]
+albedo_color = Color(0.632174, 0, 0.00832854, 1)
+emission_enabled = true
+emission = Color(0.847351, 0, 0.105976, 1)
 
 [node name="Node3D" type="Node3D"]
 process_mode = 1
@@ -39,18 +71,33 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -1, 0)
 shape = SubResource("BoxShape3D_j3hnp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_urd1m")
+transform = Transform3D(100, 0, 0, 0, 10, 0, 0, 0, 28, 0, 0, 35)
+material_override = ExtResource("3_w1kym")
 mesh = SubResource("PlaneMesh_6ie7x")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0, 0)
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 28, 0, 0, -32)
+mesh = SubResource("PlaneMesh_n111x")
+surface_material_override/0 = ExtResource("3_w1kym")
 
-[node name="VehicleBody3D" parent="." node_paths=PackedStringArray("level") instance=ExtResource("2_yf4kf")]
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 5.5, 0, 0, 1.5)
+mesh = SubResource("PlaneMesh_u75wb")
+surface_material_override/0 = SubResource("StandardMaterial3D_1dqca")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 0, 0)
+directional_shadow_mode = 0
+
+[node name="VehicleBody3D" parent="." node_paths=PackedStringArray("level", "camera", "cannon_aim_indicator") instance=ExtResource("2_yf4kf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
 mass = 1.0
 physics_material_override = SubResource("PhysicsMaterial_cgfai")
 center_of_mass_mode = 1
+speed = 12.0
 level = NodePath("..")
+camera = NodePath("../Camera3D_wholearena")
+cannon_aim_indicator = NodePath("../CannonAimIndicator")
 
 [node name="LineSawblade" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_ca5sd")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -0.9, -8)
@@ -61,25 +108,74 @@ knockback_to_player = 16.0
 player = NodePath("../VehicleBody3D")
 
 [node name="Ramp" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_jb6yt")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -11, -0.9, 5)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -10, -0.9, 15)
 ramp_lift_speed = 5.0
 player = NodePath("../VehicleBody3D")
 
 [node name="CrushingWalls" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_243ot")]
-transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, -1, 40)
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, -1, 1)
 close_speed = 4.0
 open_speed = 4.0
 player = NodePath("../VehicleBody3D")
 
 [node name="CollectibleItem" parent="." instance=ExtResource("7_2fu4u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.993757, 0.109508, -0.0213388, 0.00537891, 0.144014, 0.989561, 0.111438, -0.983498, 0.142526, 0, 7.87411, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 40, 0)
+visible = false
 script = ExtResource("8_1mfl4")
+y_offset = 40.0
 
 [node name="Enemy01" parent="." instance=ExtResource("9_7vd43")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.38188, -15.6943)
+
+[node name="arena" parent="." instance=ExtResource("10_ngdjv")]
+transform = Transform3D(4, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0)
+
+[node name="Camera3D_wholearena" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 35, 0)
+current = true
+fov = 90.0
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-1, 8.44439e-08, -2.26267e-08, 0, 0.258819, 0.965926, 8.74228e-08, 0.965926, -0.258819, 0, 0, 0)
+directional_shadow_mode = 0
+sky_mode = 1
+
+[node name="ArenaBoundary" type="StaticBody3D" parent="."]
+transform = Transform3D(3.2, 0, 0, 0, 3.2, 0, 0, 0, 3.2, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaBoundary"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.4375, 0, 0)
+shape = SubResource("BoxShape3D_qqv5k")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="ArenaBoundary"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.4375)
+shape = SubResource("BoxShape3D_dtacg")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="ArenaBoundary"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8125, 0, 0)
+shape = SubResource("BoxShape3D_3ua2o")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="ArenaBoundary"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.4375)
+shape = SubResource("BoxShape3D_wn7yy")
+
+[node name="Pit" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pit"]
+shape = SubResource("BoxShape3D_gtirx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pit"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
+mesh = SubResource("PlaneMesh_e6tcf")
+surface_material_override/0 = SubResource("StandardMaterial3D_n7tam")
+
+[node name="CannonAimIndicator" type="MeshInstance3D" parent="."]
+mesh = SubResource("TorusMesh_ftlfw")
+surface_material_override/0 = SubResource("StandardMaterial3D_caayw")
 
 [connection signal="body_entered" from="VehicleBody3D" to="VehicleBody3D" method="_on_body_entered"]
 [connection signal="body_exited" from="VehicleBody3D" to="VehicleBody3D" method="_on_body_exited"]

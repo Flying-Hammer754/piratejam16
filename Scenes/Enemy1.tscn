@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bt63uicsd5l0x"]
+[gd_scene load_steps=6 format=3 uid="uid://bt63uicsd5l0x"]
 
 [ext_resource type="Script" path="res://Scripts/enemy_1.gd" id="1_kxonf"]
+[ext_resource type="PackedScene" uid="uid://cldbt6ij7jvky" path="res://Models and textures/Models/spike_ball.glb" id="2_s4n3l"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_oabm2"]
 
@@ -9,10 +10,12 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_ini4s"]
 
 [node name="Enemy01" type="RigidBody3D"]
+collision_layer = 9
 collision_mask = 3
 script = ExtResource("1_kxonf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("BoxMesh_oabm2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -24,3 +27,5 @@ collision_layer = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_ini4s")
+
+[node name="spike_ball" parent="." instance=ExtResource("2_s4n3l")]

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxmc1ot1yl2yu"]
+
+[ext_resource type="Script" path="res://Scripts/cannon_ball.gd" id="1_4wpud"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_a6gv5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vkt01"]
+albedo_color = Color(1, 0.245064, 0.18949, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_de51s"]
+size = Vector3(1, 100, 1)
+
+[node name="CannonBall" type="Node3D"]
+
+[node name="MovingCannonBall" type="Area3D" parent="."]
+collision_mask = 8
+script = ExtResource("1_4wpud")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MovingCannonBall"]
+mesh = SubResource("SphereMesh_a6gv5")
+surface_material_override/0 = SubResource("StandardMaterial3D_vkt01")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MovingCannonBall"]
+shape = SubResource("BoxShape3D_de51s")
+
+[connection signal="body_entered" from="MovingCannonBall" to="MovingCannonBall" method="_on_body_entered"]

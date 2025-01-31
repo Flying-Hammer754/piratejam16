@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbhny3vdcu3um"]
+[gd_scene load_steps=5 format=3 uid="uid://bbhny3vdcu3um"]
+
+[ext_resource type="PackedScene" uid="uid://xcv78otinj2f" path="res://Models and textures/Models/hammer.glb" id="1_4kif6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ang2d"]
 size = Vector3(1, 3, 2)
@@ -11,7 +13,7 @@ top_radius = 0.3
 bottom_radius = 0.3
 radial_segments = 6
 
-[node name="AnimatableBody3D" type="Area3D"]
+[node name="Hammer" type="Area3D"]
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -20,10 +22,15 @@ shape = SubResource("BoxShape3D_ang2d")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 1)
+visible = false
 gi_mode = 0
 mesh = SubResource("BoxMesh_1o3ah")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1)
+visible = false
 gi_mode = 0
 mesh = SubResource("CylinderMesh_368hd")
+
+[node name="hammer" parent="." instance=ExtResource("1_4kif6")]
+transform = Transform3D(-1.44248e-08, 0, 0.33, 0, 0.33, 0, -0.33, 0, -1.44248e-08, 0, 0, 1)
