@@ -24,7 +24,6 @@ const RAY_LENGTH: float = 1000
 
 @export_flags_3d_physics var ground_layer
 
-const player_common = preload("res://Scripts/player_common.gd")
 const item_ui_element = preload("res://Scenes/ui_item_element.tscn")
 const cannon_ball = preload("res://Scenes/cannon_ball.tscn")
 
@@ -46,8 +45,13 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_area_entered(body: Area3D) -> void:
-		if body.get_collision_layer_value(3):
-			item_in_range = body
+	print("B")
+	if body.get_collision_layer_value(3):
+		item_in_range = body
+	elif body.get_collision_layer_value(2):
+		print("a")
+		var game_over_panel = $/root/Game/GameOverPanel
+		game_over_panel.visible = true
 
 func _on_area_exited(body: Area3D) -> void:
 	if item_in_range == body:
@@ -124,7 +128,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("player_fall_over"):
 		angular_velocity.x += 1
 	
-	ragdoll_time = player_common.handle_ragdoll(delta, ragdoll_time, self)
+	ragdoll_time = handle_ragdoll(delta, ragdoll_time, self)
 	
 	if is_grounded():
 		landing_timer += delta  # Increment the timer while grounded
@@ -142,3 +146,17 @@ func is_grounded() -> bool:
 func is_fully_landed() -> bool:
 	# Check if the player has been grounded for the required duration
 	return landing_timer >= landing_duration
+
+const start_of_ragdoll: float = 0.08
+
+func handle_ragdoll(delta: float, ragdoll_time: float, out: RigidBody3D) -> float:
+	if Vector2(out.rotation.x, out.rotation.z).distance_squared_to(Vector2.ZERO) < start_of_ragdoll:
+		return 0.0
+	else:
+		ragdoll_time += delta
+		if ragdoll_time > 5:
+			var game_over_panel: Panel = $/root/Game/GameOverPanel
+			game_over_panel.visible = true
+			return 0.0
+		else:
+			return ragdoll_time

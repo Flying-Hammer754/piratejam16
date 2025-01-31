@@ -68,7 +68,7 @@ damping_relaxation = 0.5
 
 [node name="item_pickup" type="Area3D" parent="."]
 collision_layer = 4
-collision_mask = 4
+collision_mask = 6
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="item_pickup"]

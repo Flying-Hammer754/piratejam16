@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://3q07t5q38dgu"]
+[gd_scene load_steps=5 format=3 uid="uid://3q07t5q38dgu"]
 
 [ext_resource type="Script" path="res://Scripts/UI.gd" id="1_mcfrh"]
 [ext_resource type="PackedScene" uid="uid://bsfghn0astcep" path="res://Scenes/ui_item_element.tscn" id="2_h2wat"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8am14"]
 bg_color = Color(0.775063, 0.775063, 0.775063, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tvgdi"]
+font_size = 36
 
 [node name="Game" type="Control"]
 process_mode = 3
@@ -148,6 +151,55 @@ alignment = 1
 [node name="Item1" parent="InventoryPanel/HBoxContainer" instance=ExtResource("2_h2wat")]
 layout_mode = 2
 
+[node name="GameOverPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="GameOverPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 100.0
+offset_bottom = 150.0
+grow_horizontal = 2
+text = "Game Over"
+label_settings = SubResource("LabelSettings_tvgdi")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="RestartButton" type="Button" parent="GameOverPanel/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
+[node name="ExitToMenuButton" type="Button" parent="GameOverPanel/VBoxContainer"]
+layout_mode = 2
+text = "Exit to Menu"
+
+[node name="ExitToDesktopButton" type="Button" parent="GameOverPanel/VBoxContainer"]
+layout_mode = 2
+text = "Exit to Desktop"
+
 [connection signal="pressed" from="MainMenuPanel/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="MainMenuPanel/VBoxContainer/LoadGameButton" to="." method="_on_load_game_button_pressed"]
 [connection signal="pressed" from="MainMenuPanel/VBoxContainer/LicenseButton" to="." method="_on_license_button_pressed"]
@@ -157,3 +209,6 @@ layout_mode = 2
 [connection signal="pressed" from="PauseMenuPanel/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="PauseMenuPanel/VBoxContainer/ExitToMenuButton" to="." method="_on_exit_to_menu_button_pressed"]
 [connection signal="pressed" from="PauseMenuPanel/VBoxContainer/ExitToDesktopButton" to="." method="_on_exit_to_desktop_button_pressed"]
+[connection signal="pressed" from="GameOverPanel/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="GameOverPanel/VBoxContainer/ExitToMenuButton" to="." method="_on_exit_to_menu_button_pressed"]
+[connection signal="pressed" from="GameOverPanel/VBoxContainer/ExitToDesktopButton" to="." method="_on_exit_to_desktop_button_pressed"]

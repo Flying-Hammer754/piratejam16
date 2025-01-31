@@ -22,6 +22,11 @@ var instantiated_game_scene: Node
 @onready var inventory_panel = $InventoryPanel
 @onready var inventory_list = $InventoryPanel/HBoxContainer
 
+@onready var game_over_panel = $GameOverPanel
+
+func toggle_game_over(enabled: bool) -> void:
+	game_over_panel.visible = enabled
+
 func toggle_inventory(enabled: bool) -> void:
 	inventory_panel.visible = enabled
 
@@ -44,13 +49,13 @@ func _on_resume_button_pressed() -> void:
 	toggle_main_menu(false)
 	toggle_pause_menu(false)
 	toggle_inventory(true)
+	toggle_game_over(false)
 	get_tree().paused = false
 	# TODO: add special logic to resume game
 
-# TODO: will this game be a linear one with levels, or a roguelike?
-# what this function does will defer based on that.
 func _on_restart_button_pressed() -> void:
-	pass 
+	remove_child(instantiated_game_scene)
+	_on_new_game_button_pressed()
 
 func _on_settings_button_pressed() -> void:
 	pass # TODO:
@@ -59,6 +64,7 @@ func _on_exit_to_menu_button_pressed() -> void:
 	toggle_pause_menu(false)
 	toggle_main_menu(true)
 	toggle_inventory(false)
+	toggle_game_over(false)
 	instantiated_game_scene.disconnect("item_pickup", _on_item_pickup)
 	remove_child(instantiated_game_scene)
 	get_tree().paused = false
@@ -70,6 +76,7 @@ func _on_new_game_button_pressed() -> void:
 	toggle_pause_menu(false)
 	toggle_main_menu(false)
 	toggle_inventory(true)
+	toggle_game_over(false)
 	get_tree().paused = false
 	instantiated_game_scene = game_scene.instantiate()
 	instantiated_game_scene.connect("item_pickup", _on_item_pickup)
@@ -104,6 +111,7 @@ func _ready() -> void:
 	toggle_main_menu(true)
 	toggle_pause_menu(false)
 	toggle_inventory(false)
+	toggle_game_over(false)
 	if autoload_game_world:
 		_on_new_game_button_pressed()
 

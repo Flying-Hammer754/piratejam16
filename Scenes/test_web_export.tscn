@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cif3h1xr723vl"]
+[gd_scene load_steps=30 format=3 uid="uid://cif3h1xr723vl"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_1geyj"]
 [ext_resource type="Texture2D" uid="uid://ltrhgornomel" path="res://icon.svg" id="1_yuen3"]
@@ -14,7 +14,7 @@
 [ext_resource type="Script" path="res://Scripts/enemy_spawner.gd" id="11_bbedv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j3hnp"]
-size = Vector3(100, 1, 100)
+size = Vector3(100, 1, 20)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_6ie7x"]
 
@@ -24,6 +24,12 @@ size = Vector3(100, 1, 100)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1dqca"]
 albedo_color = Color(0.364384, 0.196851, 0.0431247, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cijxn"]
+size = Vector3(100, 1, 40)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xjoo3"]
+size = Vector3(15, 1, 13)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cgfai"]
 bounce = 0.6
@@ -41,7 +47,7 @@ size = Vector3(1, 10, 18)
 size = Vector3(18, 10, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gtirx"]
-size = Vector3(200, 3, 200)
+size = Vector3(200, 10, 200)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_e6tcf"]
 
@@ -68,7 +74,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -1, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -1, 27)
 shape = SubResource("BoxShape3D_j3hnp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
@@ -86,6 +92,14 @@ transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 5.5, 0, 0, 1.5)
 mesh = SubResource("PlaneMesh_u75wb")
 surface_material_override/0 = SubResource("StandardMaterial3D_1dqca")
 
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -24)
+shape = SubResource("BoxShape3D_cijxn")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -1, 1)
+shape = SubResource("BoxShape3D_xjoo3")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 0, 0)
 directional_shadow_mode = 0
@@ -99,6 +113,7 @@ speed = 12.0
 level = NodePath("..")
 camera = NodePath("../Camera3D_wholearena")
 cannon_aim_indicator = NodePath("../CannonAimIndicator")
+cannon_fire_rate = 1.0
 
 [node name="LineSawblade" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_ca5sd")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -0.9, -8)
@@ -153,15 +168,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.4375)
 shape = SubResource("BoxShape3D_dtacg")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="ArenaBoundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8125, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.4375, 0, 0)
 shape = SubResource("BoxShape3D_3ua2o")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="ArenaBoundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.4375)
 shape = SubResource("BoxShape3D_wn7yy")
 
-[node name="Pit" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, 0)
+[node name="Pit" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9, 0)
+collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pit"]
 shape = SubResource("BoxShape3D_gtirx")

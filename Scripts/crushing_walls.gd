@@ -37,7 +37,9 @@ func _physics_process(delta: float) -> void:
 		var right_wall_collision = right_wall.move_and_collide(Vector3.LEFT * close_speed * delta)
 		if left_wall_collision != null:
 			if left_wall_collision.get_collider() == player && right_wall_collision != null && right_wall_collision.get_collider() == player:
-				print("Game Over")
+				var game_over_panel: Panel = $/root/Game/GameOverPanel
+				game_over_panel.visible = true
+				get_tree().paused = true
 				player.position = Vector3.UP
 			elif left_wall_collision.get_collider() == right_wall:
 				opening = true
