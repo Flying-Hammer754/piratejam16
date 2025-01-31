@@ -1,7 +1,7 @@
 extends RigidBody3D
 
 @export var speed: float = 15.0  # Speed at which the enemy moves toward the player
-@onready var player = $"../VehicleBody3D"  # Reference to the player vehicle
+@onready var player = $"../../VehicleBody3D"  # Reference to the player vehicle
 
 func _ready() -> void:
 	if player:
